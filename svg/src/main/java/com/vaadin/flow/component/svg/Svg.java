@@ -25,7 +25,7 @@ import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
 
 @Tag("vcf-svg")
-@NpmPackage(value = "@vaadin-component-factory/vcf-svg", version = "0.1.6")
+@NpmPackage(value = "@vaadin-component-factory/vcf-svg", version = "0.1.7")
 @JsModule("@vaadin-component-factory/vcf-svg/src/vcf-svg.js")
 public class Svg extends Component {
 
