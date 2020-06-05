@@ -8,15 +8,16 @@ package com.vaadin.flow.component.svg;
  * %%
  * This program is available under Commercial Vaadin Add-On License 3.0
  * (CVALv3).
- * 
+ *
  * See the file license.html distributed with this software for more
  * information about licensing.
- * 
+ *
  * You should have received a copy of the CVALv3 along with this program.
  * If not, see <http://vaadin.com/license/cval-3>.
  * #L%
  */
 
+import com.vaadin.flow.component.Synchronize;
 import com.vaadin.flow.component.svg.elements.SvgElement;
 
 import com.vaadin.flow.component.Component;
@@ -25,7 +26,7 @@ import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
 
 @Tag("vcf-svg")
-@NpmPackage(value = "@vaadin-component-factory/vcf-svg", version = "0.1.9")
+@NpmPackage(value = "@vaadin-component-factory/vcf-svg", version = "0.1.12")
 @JsModule("@vaadin-component-factory/vcf-svg/src/vcf-svg.js")
 public class Svg extends Component {
 
@@ -48,4 +49,26 @@ public class Svg extends Component {
     }
 
     private static final long serialVersionUID = 4669224429512601365L;
+
+
+    /**
+     * Sets the zoom feature to enabled or disabled.
+     * By default the zoom feature is disabled.
+     *
+     * @param zoomEnabled - true enabled, false disabled
+     */
+    public void setZoomEnabled(boolean zoomEnabled) {
+        getElement().setProperty("zoomable", zoomEnabled);
+    }
+
+    /**
+     * Returns the enabled state of the zoom feature.
+     *
+     * @return true if enabled, false if disabled
+     * @see #setZoomEnabled(boolean)
+     */
+    @Synchronize("zoomable-changed")
+    public boolean isZoomEnabled() {
+        return getElement().getProperty("zoomable", false);
+    }
 }

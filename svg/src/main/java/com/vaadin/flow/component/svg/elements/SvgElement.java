@@ -10,10 +10,10 @@ import elemental.json.*;
  * %%
  * This program is available under Commercial Vaadin Add-On License 3.0
  * (CVALv3).
- * 
+ *
  * See the file license.html distributed with this software for more
  * information about licensing.
- * 
+ *
  * You should have received a copy of the CVALv3 along with this program.
  * If not, see <http://vaadin.com/license/cval-3>.
  * #L%
@@ -69,8 +69,9 @@ public abstract class SvgElement {
     return getAttributes();
   }
 
-  public void setConstructor(String type, JsonValue... args) {
-    getAttributes().put("__constructor", type);
+  public void setConstructor(SvgType type, JsonValue... args) {
+    assert type != null;
+    getAttributes().put("__constructor", type.getClientSideType());
     getAttributes().put("__constructorArgs", createArgArray(args));
   }
 
