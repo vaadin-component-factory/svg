@@ -1,3 +1,19 @@
+/*
+ * #%L
+ * Vaadin Component Factory Svg Component for Vaadin 14
+ * %%
+ * Copyright (C) 2017 - 2020 Vaadin Ltd
+ * %%
+ * This program is available under Commercial Vaadin Add-On License 3.0
+ * (CVALv3).
+ * 
+ * See the file license.html distributed with this software for more
+ * information about licensing.
+ * 
+ * You should have received a copy of the CVALv3 along with this program.
+ * If not, see <http://vaadin.com/license/cval-3>.
+ * #L%
+ */
 package com.vaadin.flow.component.svg.elements;
 
 /**
@@ -59,17 +75,19 @@ public class Text extends SvgElement {
 
     /**
      * Sets the font size of this text element, this can be in absolute (px) or relative (ex: em, ex) values.
+     *
      * @param fontSize the font size to use
      */
-    public void setFontSize(String fontSize){
+    public void setFontSize(String fontSize) {
         setAttribute("font-size", fontSize);
     }
 
     /**
      * Returns the font size for this text element.
+     *
      * @return the font size or null if none set
      */
-    public String getFontSize(){
+    public String getFontSize() {
         return getStringAttribute("font-size");
     }
 

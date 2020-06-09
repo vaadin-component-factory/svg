@@ -1,5 +1,3 @@
-package com.vaadin.flow.component.svg;
-
 /*
  * #%L
  * Vaadin Component Factory Svg Component for Vaadin 14
@@ -8,14 +6,15 @@ package com.vaadin.flow.component.svg;
  * %%
  * This program is available under Commercial Vaadin Add-On License 3.0
  * (CVALv3).
- *
+ * 
  * See the file license.html distributed with this software for more
  * information about licensing.
- *
+ * 
  * You should have received a copy of the CVALv3 along with this program.
  * If not, see <http://vaadin.com/license/cval-3>.
  * #L%
  */
+package com.vaadin.flow.component.svg;
 
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasSize;

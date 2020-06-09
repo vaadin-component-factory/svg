@@ -1,4 +1,20 @@
 package com.vaadin.flow.component.svg.vaadincom;
+/*
+ * #%L
+ * Vaadin Component Factory Svg Component for Vaadin 14
+ * %%
+ * Copyright (C) 2017 - 2020 Vaadin Ltd
+ * %%
+ * This program is available under Commercial Vaadin Add-On License 3.0
+ * (CVALv3).
+ *
+ * See the file license.html distributed with this software for more
+ * information about licensing.
+ *
+ * You should have received a copy of the CVALv3 along with this program.
+ * If not, see <http://vaadin.com/license/cval-3>.
+ * #L%
+ */
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Span;
@@ -161,16 +177,16 @@ public class SvgView extends DemoView {
         controlButtons.add(new Button("Display drag events", e -> {
             svg.addDragStartListener(event -> {
                 Notification.show("Drag start: " + event.getElement().getId(), 2500, Notification.Position.MIDDLE);
-                dragDetail.setText("Drag Start for: " + event.getElement().getId() + " X: "+ event.getElementX() + " Y: " +event.getElementY());
+                dragDetail.setText("Drag Start for: " + event.getElement().getId() + " X: " + event.getElementX() + " Y: " + event.getElementY());
             });
 
             svg.addDragEndListener(event -> {
                 Notification.show("Drag End: " + event.getElement().getId(), 2500, Notification.Position.MIDDLE);
-                dragDetail.setText("Drag End for: " + event.getElement().getId() + " X: "+ event.getElementX() + " Y: " +event.getElementY());
+                dragDetail.setText("Drag End for: " + event.getElement().getId() + " X: " + event.getElementX() + " Y: " + event.getElementY());
             });
 
             svg.addDragMoveListener(event -> {
-                dragDetail.setText("Drag Move for: " + event.getElement().getId() + " X: "+ event.getElementX() + " Y: " +event.getElementY());
+                dragDetail.setText("Drag Move for: " + event.getElement().getId() + " X: " + event.getElementX() + " Y: " + event.getElementY());
             });
 
         }));
@@ -179,9 +195,6 @@ public class SvgView extends DemoView {
         // end-source-example
         addCard("Complex Demo", demoContainer);
     }
-
-
-
 
 
 }

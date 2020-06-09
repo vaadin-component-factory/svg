@@ -1,9 +1,3 @@
-package com.vaadin.flow.component.svg.elements;
-
-import elemental.json.*;
-
-import java.util.Objects;
-
 /*
  * #%L
  * Vaadin Component Factory Svg Component for Vaadin 14
@@ -12,14 +6,20 @@ import java.util.Objects;
  * %%
  * This program is available under Commercial Vaadin Add-On License 3.0
  * (CVALv3).
- *
+ * 
  * See the file license.html distributed with this software for more
  * information about licensing.
- *
+ * 
  * You should have received a copy of the CVALv3 along with this program.
  * If not, see <http://vaadin.com/license/cval-3>.
  * #L%
  */
+package com.vaadin.flow.component.svg.elements;
+
+import elemental.json.*;
+
+import java.util.Objects;
+
 
 /**
  * This is the base class for all the Svg elements and contains the attributes
