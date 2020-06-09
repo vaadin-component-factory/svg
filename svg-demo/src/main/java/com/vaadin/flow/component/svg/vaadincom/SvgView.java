@@ -1,15 +1,26 @@
 package com.vaadin.flow.component.svg.vaadincom;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Span;
+import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.svg.Svg;
+import com.vaadin.flow.component.svg.elements.AbstractPolyElement;
 import com.vaadin.flow.component.svg.elements.Circle;
+import com.vaadin.flow.component.svg.elements.Ellipse;
+import com.vaadin.flow.component.svg.elements.Image;
+import com.vaadin.flow.component.svg.elements.Line;
 import com.vaadin.flow.component.svg.elements.Path;
+import com.vaadin.flow.component.svg.elements.Polygon;
+import com.vaadin.flow.component.svg.elements.Polyline;
 import com.vaadin.flow.component.svg.elements.Rect;
-import com.vaadin.flow.component.svg.elements.SvgElement;
+import com.vaadin.flow.component.svg.elements.Text;
 import com.vaadin.flow.demo.DemoView;
 import com.vaadin.flow.router.Route;
-import elemental.json.Json;
-import elemental.json.JsonObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Route("")
 public class SvgView extends DemoView {
@@ -19,27 +30,23 @@ public class SvgView extends DemoView {
     @Override
     protected void initView() {
         basicDemo();
+        complexDemo();
     }
 
     private void basicDemo() {
-
-        if (true) {
-            runPlayground();
-            return;
-        }
 
         // begin-source-example
         // source-example-heading: Basic Demo
         Svg draw = new Svg();
         Rect rect = new Rect("rect", 100, 100);
-        Circle circle = new Circle("circle", 100);
+        Circle circle = new Circle("circle", 50);
 
         rect.move(75, 0);
         rect.size(150, 150);
 
         circle.center(150, 75);
-        circle.size(150);
-        circle.attr("fill", "#396");
+        circle.setRadius(75);
+        circle.setFillColor("#396");
 
         draw.add(rect);
         draw.add(circle);
@@ -48,55 +55,133 @@ public class SvgView extends DemoView {
         addCard("Basic Demo", draw);
     }
 
-    private void runPlayground() {
+    private void complexDemo() {
 
+        // begin-source-example
+        // source-example-heading: Complex Demo
+        VerticalLayout demoContainer = new VerticalLayout();
+        HorizontalLayout controlButtons = new HorizontalLayout();
+        demoContainer.add(controlButtons);
+        Span dragDetail = new Span();
+        demoContainer.add(dragDetail);
 
         Svg svg = new Svg();
-        //svg.getElement().setAttribute("zoomable", "true");
+        svg.viewbox(0, 0, 380, 380);
+        svg.setWidth("100%");
+        svg.setHeight("500px");
 
-        Circle circle1 = new Circle("circle1", 50);
-        circle1.move(0, 30);
-        svg.add(circle1);
+        double size = 100;
+        double space = size + 20;
+        double x = 20;
+        double y = 20;
+        String fillColor = "#ff0066";
 
-        Circle rect = new Circle("circle2", 50);
-        rect.setId("findMe");
-        rect.setAttr("draggable", Json.create(true));
-        rect.move(75, 0);
+        //Rect
+        Rect rect = new Rect("rect1", size, size);
+        rect.setFillColor(fillColor);
+        rect.move(x, y);
         svg.add(rect);
 
-        Circle rect3 = new Circle("circle3", 50);
-        rect3.move(150, 30);
-        svg.add(rect3);
+        //Circle
+        double circleRadial = size / 2;
+        Circle circle = new Circle("circle1", circleRadial);
+        circle.setFillColor(fillColor);
+        circle.move(x += space, y);
+        svg.add(circle);
 
-//        Path path = new Path("path1", "M0 0 H50 A20 20 0 1 0 100 50 v25 C50 125 0 85 0 85 z");
-//        Path path = new Path("path1", "M50 0 L200 0 A20 20 0 1 1 200 50 L50 50 A20 20 0 1 1 50 0 z");
-//        Path path = new Path("path1", "M50 0 L200 0");
-        Path path = new Path("path1", "M50 0 Q125 40 200 0 A20 20 0 1 1 200 50 L50 50 A20 20 0 1 1 50 0 z");
-        path.setFill("none");
-        path.setStroke("#f06", 4, Path.LINE_CAP.ROUND, Path.LINE_JOIN.ROUND);
+        //Ellipse
+        Ellipse ellipse = new Ellipse("ellipse1", circleRadial, circleRadial * 0.5);
+        ellipse.setFillColor(fillColor);
+        ellipse.move(x += space, y);
+        svg.add(ellipse);
 
-        path.move(0, 30);
+        //Line
+        Line line = new Line("line", new AbstractPolyElement.PolyCoordinatePair(x = 20, y += space),
+            new AbstractPolyElement.PolyCoordinatePair(x + size,
+                y + size));
+        line.setStroke(fillColor, 10, Path.LINE_CAP.ROUND, null);
+        svg.add(line);
+
+        //Polyline
+        List<AbstractPolyElement.PolyCoordinatePair> points = new ArrayList<>();
+        points.add(new Polyline.PolyCoordinatePair(50, 0));
+        points.add(new Polyline.PolyCoordinatePair(60, 40));
+        points.add(new Polyline.PolyCoordinatePair(100, 50));
+        points.add(new Polyline.PolyCoordinatePair(60, 60));
+        points.add(new Polyline.PolyCoordinatePair(50, 100));
+        points.add(new Polyline.PolyCoordinatePair(40, 60));
+        points.add(new Polyline.PolyCoordinatePair(0, 50));
+        points.add(new Polyline.PolyCoordinatePair(40, 40));
+
+        Polyline polyline = new Polyline("polyline", points);
+        polyline.setFillColor("none");
+        polyline.setStroke(fillColor, 4, Path.LINE_CAP.ROUND, Path.LINE_JOIN.ROUND);
+        polyline.move(x += space, y);
+        svg.add(polyline);
+
+        //Polygon
+        Polygon polygon = new Polygon("polygon", points);
+        polygon.setFillColor(fillColor);
+        polygon.move(x += space, y);
+        svg.add(polygon);
+
+        //Path
+        Path path = new Path("path", "M0 0 H50 A20 20 0 1 0 100 50 v25 C50 125 0 85 0 85 z");
+        path.setFillColor("none");
+        path.setStroke(fillColor, 4, Path.LINE_CAP.ROUND, Path.LINE_JOIN.ROUND);
+        path.move(x = 20, y += space);
         svg.add(path);
 
-        add(new Button("Toggle Zoom", e -> svg.setZoomEnabled(!svg.isZoomEnabled())));
+        //Text
+        Text text = new Text("text", "Sample text.");
+        text.setFontFamily("'Roboto', 'Noto', sans-serif");
+        text.setFillColor(fillColor);
+        text.move(x += space, y);
+        svg.add(text);
 
-//        svg.getElement().addEventListener("svg-ready", e -> {
-//            svg.getElement().executeJs("$0.draggable($0.findOneById('findMe'), true)", svg.getElement());
-//        });
+        //Image
+        Image image = new Image("image", "https://vaadin.com/images/hero-reindeer.svg");
+        image.size(size, size);
+        image.move(x += space, y);
+        image.setDraggable(false);
+        svg.add(image);
 
-        svg.getElement().addEventListener("dragend", e -> {
-            System.out.println("dragend event, id: " + e.getEventData().getString("event.detail.handler.el.node.id"));
-        }).addEventData("event.detail.handler.el.node.id");
-        svg.getElement().addEventListener("dragstart", e -> {
-            System.out.println("dragstart event, id: " + e.getEventData().getString("event.detail.handler.el.node.id"));
-        }).addEventData("event.detail.handler.el.node.id");
-        svg.getElement().addEventListener("dragmove", e -> {
-            System.out.println("dragmove event, id: " + e.getEventData().getString("event.detail.handler.el.node.id"));
-        }).addEventData("event.detail.handler.el.node.id");
+        demoContainer.add(svg);
+
+        //Add control buttons
+        controlButtons.add(new Button("Toggle Zoom", e -> svg.setZoomEnabled(!svg.isZoomEnabled())));
+        controlButtons.add(new Button("Toggle draggable", e -> {
+            svg.getSvgElements().forEach(el -> el.setDraggable(!el.isDraggable()));
+            svg.getSvgElements().forEach(el -> svg.update(el));
+        }));
+        controlButtons.add(new Button("Stroke black", e -> {
+            svg.getSvgElements().forEach(el -> el.setStroke("#000000", 4, Path.LINE_CAP.ROUND, Path.LINE_JOIN.ROUND));
+            svg.getSvgElements().forEach(el -> svg.update(el));
+        }));
+        controlButtons.add(new Button("Display drag events", e -> {
+            svg.addDragStartListener(event -> {
+                Notification.show("Drag start: " + event.getElement().getId(), 2500, Notification.Position.MIDDLE);
+                dragDetail.setText("Drag Start for: " + event.getElement().getId() + " X: "+ event.getElementX() + " Y: " +event.getElementY());
+            });
+
+            svg.addDragEndListener(event -> {
+                Notification.show("Drag End: " + event.getElement().getId(), 2500, Notification.Position.MIDDLE);
+                dragDetail.setText("Drag End for: " + event.getElement().getId() + " X: "+ event.getElementX() + " Y: " +event.getElementY());
+            });
+
+            svg.addDragMoveListener(event -> {
+                dragDetail.setText("Drag Move for: " + event.getElement().getId() + " X: "+ event.getElementX() + " Y: " +event.getElementY());
+            });
+
+        }));
 
 
-        add(svg);
-
-
+        // end-source-example
+        addCard("Complex Demo", demoContainer);
     }
+
+
+
+
+
 }

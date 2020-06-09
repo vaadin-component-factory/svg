@@ -17,11 +17,24 @@ package com.vaadin.flow.component.svg.elements;
  * #L%
  */
 
+/**
+ * Represents a Rectangle svg element
+ */
 public class Rect extends SvgElement {
 
+    /**
+     * Creates a new Rectangle element with the given id, width and height
+     * @param id
+     * @param width
+     * @param height
+     */
     public Rect(String id, double width, double height) {
         super(id);
         setConstructor(SvgType.RECT, val(width), val(height));
     }
 
+    @Override
+    public void size(double width, double height) {
+        super.size(width, height);
+    }
 }

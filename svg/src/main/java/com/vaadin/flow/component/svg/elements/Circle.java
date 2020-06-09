@@ -17,16 +17,50 @@ package com.vaadin.flow.component.svg.elements;
  * #L%
  */
 
+/**
+ * Represents a Circle svg element.
+ */
 public class Circle extends SvgElement {
 
-    public Circle(String id, double diameter) {
+    /**
+     * Creates a Circle element with the given Radius
+     *
+     * @param id     the unique id of this circle
+     * @param radius the radius of this circle
+     */
+    public Circle(String id, double radius) {
         super(id);
-        setConstructor(SvgType.CIRCLE, val(diameter));
+        setConstructor(SvgType.CIRCLE, val(radius * 2));
+        setRadius(radius);
     }
 
-    @Override
-    public void size(double width, double height) {
-        super.size(width);
+    /**
+     * Sets the radius of this Circle element.
+     *
+     * @param radius the radius to set
+     */
+    public void setRadius(double radius) {
+        setAttribute("r", radius);
+    }
+
+    /**
+     * Returns the current radius of this Circle element
+     *
+     * @return the radius of this circle
+     */
+    public double getRadius() {
+        Number radius = getNumberAttribute("radius");
+        return radius != null ? radius.doubleValue() : -1;
+    }
+
+    /**
+     * Sets the center point of this circle.
+     *
+     * @param cx the center x coordinate
+     * @param cy the center y coordinate
+     */
+    public void center(double cx, double cy) {
+        pushUpdate("center", val(cx), val(cy));
     }
 
 }
