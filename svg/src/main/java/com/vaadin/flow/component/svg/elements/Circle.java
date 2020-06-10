@@ -49,7 +49,7 @@ public class Circle extends SvgElement {
      * @return the radius of this circle
      */
     public double getRadius() {
-        Number radius = getNumberAttribute("radius");
+        Number radius = getNumberAttribute("r");
         return radius != null ? radius.doubleValue() : -1;
     }
 
