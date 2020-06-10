@@ -168,11 +168,40 @@ public class SvgView extends DemoView {
         controlButtons.add(new Button("Toggle Zoom", e -> svg.setZoomEnabled(!svg.isZoomEnabled())));
         controlButtons.add(new Button("Toggle draggable", e -> {
             svg.getSvgElements().forEach(el -> el.setDraggable(!el.isDraggable()));
-            svg.getSvgElements().forEach(el -> svg.update(el));
+
+            svg.getSvgElements().forEach(el -> {
+
+                // Due to the nature of how the polygons are written, if we do an update
+                // to them they will move back to 0,0. Hence, we have to move them back
+                // to their desired location when we do an update.
+                if (el == polyline) {
+                    el.move(20 + space, 20 + space);
+                }
+
+                if (el == polygon) {
+                    el.move(20 + space * 2, 20 + space);
+                }
+
+                svg.update(el);
+            });
         }));
         controlButtons.add(new Button("Stroke black", e -> {
             svg.getSvgElements().forEach(el -> el.setStroke("#000000", 4, Path.LINE_CAP.ROUND, Path.LINE_JOIN.ROUND));
-            svg.getSvgElements().forEach(el -> svg.update(el));
+            svg.getSvgElements().forEach(el -> {
+
+                // Due to the nature of how the polygons are written, if we do an update
+                // to them they will move back to 0,0. Hence, we have to move them back
+                // to their desired location when we do an update.
+                if (el == polyline) {
+                    el.move(20 + space, 20 + space);
+                }
+
+                if (el == polygon) {
+                    el.move(20 + space * 2, 20 + space);
+                }
+
+                svg.update(el);
+            });
         }));
         controlButtons.add(new Button("Display drag events", e -> {
             svg.addDragStartListener(event -> {
@@ -185,10 +214,17 @@ public class SvgView extends DemoView {
                 dragDetail.setText("Drag End for: " + event.getElement().getId() + " X: " + event.getElementX() + " Y: " + event.getElementY());
             });
 
-            svg.addDragMoveListener(event -> {
-                dragDetail.setText("Drag Move for: " + event.getElement().getId() + " X: " + event.getElementX() + " Y: " + event.getElementY());
-            });
+            dragDetail.setText("DragMove disabled for public demo due to potentially high request count.");
+//            svg.addDragMoveListener(event -> {
+//                dragDetail.setText("Drag Move for: " + event.getElement().getId() + " X: " + event.getElementX() + " Y: " + event.getElementY());
+//            });
 
+            e.getSource().setEnabled(false);
+        }));
+
+        controlButtons.add(new Button("Remove Line", e -> {
+            svg.remove(line);
+            e.getSource().setEnabled(false);
         }));
 
 

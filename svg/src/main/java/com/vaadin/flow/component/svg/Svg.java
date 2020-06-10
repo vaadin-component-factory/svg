@@ -72,16 +72,23 @@ public class Svg extends Component implements HasSize, HasStyle {
      */
     public void add(SvgElement element) {
         Objects.requireNonNull(element);
-        getElement().callJsFunction("add", element.toJson());
+        getElement().callJsFunction("add", element.cloneAttributesToJson());
         svgElements.add(element);
+        element.clearUpdates();
     }
 
-    //TODO, no client-side api yet...
-//    public void remove(SvgElement element){
-//        getElement().callJsFunction();
-//        svgElements.remove(element);
-//
-//    }
+    /**
+     * Removes the given element from this Svg component if it exists.
+     *
+     * @param element the element to remove
+     */
+    public void remove(SvgElement element) {
+
+        //Only call the client-side if the element actually existed here before.
+        if (svgElements.remove(element)) {
+            getElement().callJsFunction("remove", element.getId());
+        }
+    }
 
     /**
      * Used to update a single Svg element whose attributes might have changed.
@@ -89,7 +96,9 @@ public class Svg extends Component implements HasSize, HasStyle {
      * @param element the element to update to the client side.
      */
     public void update(SvgElement element) {
-        getElement().callJsFunction("update", element.toJson());
+
+        getElement().callJsFunction("update", element.cloneAttributesToJson());
+        element.clearUpdates();
     }
 
     /**

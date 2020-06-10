@@ -17,6 +17,7 @@
 package com.vaadin.flow.component.svg.elements;
 
 import elemental.json.*;
+import elemental.json.impl.JreJsonFactory;
 
 import java.util.Objects;
 
@@ -30,14 +31,10 @@ public abstract class SvgElement {
 
     private String id;
 
+    /*
+     * This array contains all the attributes that represent the state of this SvgElement
+     */
     private JsonObject attributes;
-    // These are for more complex updates than single
-    // attribute changes where the client-side has to
-    // do calculations based on its current actual
-    // state. For instance a "move" is relative to the
-    // "current x,y", hence the update needs to call a
-    // function on the client-side with specific values.
-    private JsonArray updates;
 
     /**
      * Creates a new SvgElement with the given id
@@ -47,7 +44,7 @@ public abstract class SvgElement {
     public SvgElement(String id) {
         Objects.nonNull(id);
         setAttributes(Json.createObject());
-        setUpdates(Json.createArray());
+        clearUpdates();
         setId(id);
     }
 
@@ -87,18 +84,17 @@ public abstract class SvgElement {
     }
 
     /**
-     * Returns the internal attributes JsonObject. This is primarily
-     * intended as an internal method and does not include any
-     * protections or logic to track changes. I.e. a developer
-     * can fetch the array and make any changes or add attributes,
-     * however it is recommended to use the approapriate public API
-     * for this or extend the element and add proper public API if
-     * customizations are needed.
+     * Returns a cloned set of the current attributes (including updates) of this {@link SvgElement}.
+     * Changes in this array do not reflect back to this {@link SvgElement} anymore.
+     * <p>
+     * Primarily use defined public API for setting and getting attributes
      *
-     * @return the actual attributes map for this {@link SvgElement}
+     * @return the cloned set of attributes, (including updates) for this {@link SvgElement}
      */
-    public JsonObject toJson() {
-        return getAttributes();
+    public JsonObject cloneAttributesToJson() {
+        // The primary reason for this is because we need to clear the complex __updates array after Svg.add() or Svg.update()
+        // and we need the current state to be cloned before the __updates array is cleared.
+        return new JreJsonFactory().parse(getAttributes().toJson());
     }
 
 
@@ -200,35 +196,42 @@ public abstract class SvgElement {
      * @return the array with pending updates
      */
     protected JsonArray getUpdates() {
-        return updates;
+        return getAttributes().getArray("__updates");
     }
 
     /**
-     * Internal method for setting the updates array.
+     * Primarily intended for internal use for clearing and setting the updates array (for complex updates)
+     * after each push to the client by the Svg class.
      */
-    protected void setUpdates() {
+    public void clearUpdates() {
         JsonArray updates = Json.createArray();
         getAttributes().put("__updates", updates);
-        this.updates = updates;
     }
 
     /**
-     * Sets the given updates array to the attributes in preparation for sending it to the client-side.
+     * Returns the attributes object that should contain the complete state of this {@link SvgElement}
      *
-     * @param updates the updates array to set
+     * @return the actual attributes map for this {@link SvgElement}
+     * @see #cloneAttributesToJson() for a safer (cloned) set of the attributes map
      */
-    protected void setUpdates(JsonArray updates) {
-        getAttributes().put("__updates", updates);
-        this.updates = updates;
-    }
-
-    /**
-     * Returns the full set of attributes for this element.
-     *
-     * @return the internal attributes array for this element
-     */
-    JsonObject getAttributes() {
+    protected JsonObject getAttributes() {
         return attributes;
+    }
+
+    /**
+     * This is primarily intended as a fallback while the API is developed.
+     * This method will return the actual internal map containing the state
+     * of this SvgElement without any protections. Avoid using this and
+     * instead use or create proper public API for setting the attributes
+     * as this method is likely to be removed in the future.
+     *
+     * @return the actual attributes map for this {@link SvgElement}
+     * @see #getAttributes() for extension use
+     * @see #cloneAttributesToJson() for a safer (cloned) set of the attributes map
+     */
+    @Deprecated
+    public JsonObject getUnsafeAttributesMap() {
+        return getAttributes();
     }
 
     /**
