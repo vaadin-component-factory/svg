@@ -34,7 +34,7 @@ public class Group extends SvgElement {
     /**
      * Creates a new group with the given id
      *
-     * @param id
+     * @param id the id of this group, never null
      */
     public Group(String id) {
         super(id);

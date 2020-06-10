@@ -259,7 +259,7 @@ public abstract class SvgElement {
      * Creates a Json array based on the provided Json values
      *
      * @param args the values to put into the array, never null
-     * @return
+     * @return the array with the given values
      */
     protected static JsonArray createArgArray(JsonValue... args) {
         Objects.requireNonNull(args);

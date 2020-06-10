@@ -24,9 +24,9 @@ public class Rect extends SvgElement {
     /**
      * Creates a new Rectangle element with the given id, width and height
      *
-     * @param id
-     * @param width
-     * @param height
+     * @param id the id of this rectangle
+     * @param width the initial width of this rectangle
+     * @param height the initial height of this rectangle
      */
     public Rect(String id, double width, double height) {
         super(id);

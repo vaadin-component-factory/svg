@@ -38,8 +38,10 @@ public interface SvgDragStartListener extends ComponentEventListener<SvgDragStar
          * Creates a new event using the given source and indicator whether the
          * event originated from the client side or the server side.
          *
-         * @param source     the source component
-         * @param fromClient <code>true</code> if the event originated from the client
+         * @param source       the source component
+         * @param fromClient   <code>true</code> if the event originated from the client
+         * @param element      the element where this event happened
+         * @param rawEventData the raw event data for extended use
          */
         public SvgDragStartEvent(Svg source, boolean fromClient, SvgElement element, JsonObject rawEventData) {
             super(source, fromClient, rawEventData);
@@ -49,7 +51,7 @@ public interface SvgDragStartListener extends ComponentEventListener<SvgDragStar
         /**
          * Returns the svg element where the drag start happened.
          *
-         * @return
+         * @return the {@link SvgElement} where this event happened
          */
         public SvgElement getElement() {
             return element;

@@ -46,7 +46,7 @@ import java.util.logging.Logger;
  * elements as well as listen to events on said elements.
  */
 @Tag("vcf-svg")
-@NpmPackage(value = "@vaadin-component-factory/vcf-svg", version = "0.1.14")
+@NpmPackage(value = "@vaadin-component-factory/vcf-svg", version = "1.0.1")
 @JsModule("@vaadin-component-factory/vcf-svg/src/vcf-svg.js")
 public class Svg extends Component implements HasSize, HasStyle {
 
@@ -252,7 +252,8 @@ public class Svg extends Component implements HasSize, HasStyle {
      * Fires a drag start event if an svgElement is found in this Svg component based on the elementId provided.
      * Note that if an svgElement is not found, no events will be fired.
      *
-     * @param elementId the element id to look for.
+     * @param elementId    the element id to look for.
+     * @param rawEventData the raw event data for extended use
      */
     protected void onDragStartEvent(String elementId, JsonObject rawEventData) {
         Optional<SvgElement> element = findElementForId(elementId);
@@ -267,7 +268,8 @@ public class Svg extends Component implements HasSize, HasStyle {
      * Fires a drag end event if an svgElement is found in this Svg component based on the elementId provided.
      * Note that if an svgElement is not found, no events will be fired.
      *
-     * @param elementId the element id to look for.
+     * @param elementId    the element id to look for.
+     * @param rawEventData the raw event data for extended use
      */
     protected void onDragEndEvent(String elementId, JsonObject rawEventData) {
         Optional<SvgElement> element = findElementForId(elementId);
@@ -283,7 +285,8 @@ public class Svg extends Component implements HasSize, HasStyle {
      * Fires a drag move event if an svgElement is found in this Svg component based on the elementId provided.
      * Note that if an svgElement is not found, no events will be fired.
      *
-     * @param elementId the element id to look for.
+     * @param elementId    the element id to look for.
+     * @param rawEventData the raw event data for extended use
      */
     protected void onDragMoveEvent(String elementId, JsonObject rawEventData) {
         Optional<SvgElement> element = findElementForId(elementId);
