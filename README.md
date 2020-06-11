@@ -24,7 +24,7 @@ Add Svg to your project
 
 ### Using Vaadin Svg
 
-[<img src="https://raw.githubusercontent.com/vaadin/vcf-svg/master/screenshot.gif" width="700" alt="Screenshot of vcf-svg">](https://vaadin.com/components/vcf-svg)
+For screenshots and a live demo, check out the Vaadin Directory listing here: https://vaadin.com/directory/component/svg-component
 
 #### Basic use
 ```java
