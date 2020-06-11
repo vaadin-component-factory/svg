@@ -106,13 +106,15 @@ public class SvgView extends DemoView {
         svg.add(circle);
 
         //Ellipse
-        Ellipse ellipse = new Ellipse("ellipse1", circleRadial, circleRadial * 0.5);
+        Ellipse ellipse =
+            new Ellipse("ellipse1", circleRadial, circleRadial * 0.5);
         ellipse.setFillColor(fillColor);
         ellipse.move(x += space, y);
         svg.add(ellipse);
 
         //Line
-        Line line = new Line("line", new AbstractPolyElement.PolyCoordinatePair(x = 20, y += space),
+        Line line = new Line("line",
+            new AbstractPolyElement.PolyCoordinatePair(x = 20, y += space),
             new AbstractPolyElement.PolyCoordinatePair(x + size,
                 y + size));
         line.setStroke(fillColor, 10, Path.LINE_CAP.ROUND, null);
@@ -131,7 +133,8 @@ public class SvgView extends DemoView {
 
         Polyline polyline = new Polyline("polyline", points);
         polyline.setFillColor("none");
-        polyline.setStroke(fillColor, 4, Path.LINE_CAP.ROUND, Path.LINE_JOIN.ROUND);
+        polyline.setStroke(fillColor, 4, Path.LINE_CAP.ROUND,
+            Path.LINE_JOIN.ROUND);
         polyline.move(x += space, y);
         svg.add(polyline);
 
@@ -142,9 +145,11 @@ public class SvgView extends DemoView {
         svg.add(polygon);
 
         //Path
-        Path path = new Path("path", "M0 0 H50 A20 20 0 1 0 100 50 v25 C50 125 0 85 0 85 z");
+        Path path = new Path("path",
+            "M0 0 H50 A20 20 0 1 0 100 50 v25 C50 125 0 85 0 85 z");
         path.setFillColor("none");
-        path.setStroke(fillColor, 4, Path.LINE_CAP.ROUND, Path.LINE_JOIN.ROUND);
+        path.setStroke(fillColor, 4, Path.LINE_CAP.ROUND,
+            Path.LINE_JOIN.ROUND);
         path.move(x = 20, y += space);
         svg.add(path);
 
@@ -156,7 +161,8 @@ public class SvgView extends DemoView {
         svg.add(text);
 
         //Image
-        Image image = new Image("image", "https://vaadin.com/images/hero-reindeer.svg");
+        Image image = new Image("image",
+            "https://vaadin.com/images/hero-reindeer.svg");
         image.size(size, size);
         image.move(x += space, y);
         image.setDraggable(false);
@@ -165,15 +171,20 @@ public class SvgView extends DemoView {
         demoContainer.add(svg);
 
         //Add control buttons
-        controlButtons.add(new Button("Toggle Zoom", e -> svg.setZoomEnabled(!svg.isZoomEnabled())));
+        controlButtons.add(new Button("Toggle Zoom", e -> {
+            svg.setZoomEnabled(!svg.isZoomEnabled());
+        }));
+
         controlButtons.add(new Button("Toggle draggable", e -> {
-            svg.getSvgElements().forEach(el -> el.setDraggable(!el.isDraggable()));
+            svg.getSvgElements().forEach(el ->
+                el.setDraggable(!el.isDraggable()));
 
             svg.getSvgElements().forEach(el -> {
 
-                // Due to the nature of how the polygons are written, if we do an update
-                // to them they will move back to 0,0. Hence, we have to move them back
-                // to their desired location when we do an update.
+                // Due to the nature of how the polygons are written (M0 0),
+                // if we do an update to them they will move back to 0,0.
+                // Hence, we have to move them back to their desired
+                // location when we do an update.
                 if (el == polyline) {
                     el.move(20 + space, 20 + space);
                 }
@@ -185,13 +196,17 @@ public class SvgView extends DemoView {
                 svg.update(el);
             });
         }));
+
         controlButtons.add(new Button("Stroke black", e -> {
-            svg.getSvgElements().forEach(el -> el.setStroke("#000000", 4, Path.LINE_CAP.ROUND, Path.LINE_JOIN.ROUND));
+            svg.getSvgElements().forEach(el ->
+                el.setStroke("#000000", 4, Path.LINE_CAP.ROUND,
+                    Path.LINE_JOIN.ROUND));
             svg.getSvgElements().forEach(el -> {
 
-                // Due to the nature of how the polygons are written, if we do an update
-                // to them they will move back to 0,0. Hence, we have to move them back
-                // to their desired location when we do an update.
+                // Due to the nature of how the polygons are written (M0 0),
+                // if we do an update to them they will move back to 0,0.
+                // Hence, we have to move them back to their desired
+                // location when we do an update.
                 if (el == polyline) {
                     el.move(20 + space, 20 + space);
                 }
@@ -205,18 +220,32 @@ public class SvgView extends DemoView {
         }));
         controlButtons.add(new Button("Display drag events", e -> {
             svg.addDragStartListener(event -> {
-                Notification.show("Drag start: " + event.getElement().getId(), 2500, Notification.Position.MIDDLE);
-                dragDetail.setText("Drag Start for: " + event.getElement().getId() + " X: " + event.getElementX() + " Y: " + event.getElementY());
+                Notification.show("Drag start: " +
+                        event.getElement().getId(),2500,
+                    Notification.Position.MIDDLE);
+                dragDetail.setText("Drag Start for: " +
+                    event.getElement().getId() +
+                    " X: " + event.getElementX() +
+                    " Y: " + event.getElementY());
             });
 
             svg.addDragEndListener(event -> {
-                Notification.show("Drag End: " + event.getElement().getId(), 2500, Notification.Position.MIDDLE);
-                dragDetail.setText("Drag End for: " + event.getElement().getId() + " X: " + event.getElementX() + " Y: " + event.getElementY());
+                Notification.show("Drag End: " +
+                    event.getElement().getId(), 2500,
+                    Notification.Position.MIDDLE);
+                dragDetail.setText("Drag End for: " +
+                    event.getElement().getId() +
+                    " X: " + event.getElementX() +
+                    " Y: " + event.getElementY());
             });
 
-            dragDetail.setText("DragMove disabled for public demo due to potentially high request count.");
+            dragDetail.setText("DragMove disabled for public demo" +
+                " due to potentially high request count.");
 //            svg.addDragMoveListener(event -> {
-//                dragDetail.setText("Drag Move for: " + event.getElement().getId() + " X: " + event.getElementX() + " Y: " + event.getElementY());
+//                dragDetail.setText("Drag Move for: " +
+//                    event.getElement().getId() +
+//                    " X: " + event.getElementX() +
+//                    " Y: " + event.getElementY());
 //            });
 
             e.getSource().setEnabled(false);

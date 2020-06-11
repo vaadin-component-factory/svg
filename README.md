@@ -1,6 +1,6 @@
 # Vaadin Svg for Flow
 
-Vaadin Svg for Flow is a UI component add-on for Vaadin.
+Vaadin Svg for Flow is a UI component add-on for Vaadin that allows drawing SVG graphics from the server side.
 
 ## License & Author
 
@@ -28,7 +28,10 @@ Add Svg to your project
 
 #### Basic use
 ```java
-Component component = new Component();
+Svg svg = new Svg();
+svg.add(new Circle("c1", 50));
+//add this component to your layout
+add(svg); 
 ```
 
 ## Setting up for development
