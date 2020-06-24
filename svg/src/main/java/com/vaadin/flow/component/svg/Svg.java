@@ -46,7 +46,7 @@ import java.util.logging.Logger;
  * elements as well as listen to events on said elements.
  */
 @Tag("vcf-svg")
-@NpmPackage(value = "@vaadin-component-factory/vcf-svg", version = "1.0.3")
+@NpmPackage(value = "@vaadin-component-factory/vcf-svg", version = "1.0.4")
 @JsModule("@vaadin-component-factory/vcf-svg/src/vcf-svg.js")
 public class Svg extends Component implements HasSize, HasStyle {
 
@@ -75,6 +75,28 @@ public class Svg extends Component implements HasSize, HasStyle {
         getElement().callJsFunction("add", element.cloneAttributesToJson());
         svgElements.add(element);
         element.clearUpdates();
+    }
+
+    /**
+     * Pan and zoom viewport to the element.
+     *
+     * @param element the element to pan to.
+     */
+    public void panTo(SvgElement element) {
+
+        getElement().callJsFunction("panTo", "[id='" + element.getId() + "']");
+    }
+
+    /**
+     * Pan and zoom the viewport to the element.
+     *
+     * @param element the element to pan to.
+     * @param scale enable zoom to fit to viewport while panning.
+     * @param transitionDuration duration of the pan and zoom animation.
+     */
+    public void panTo(SvgElement element, Boolean scale, double transitionDuration) {
+
+        getElement().callJsFunction("panTo", "[id='" + element.getId() + "']", scale, transitionDuration);
     }
 
     /**

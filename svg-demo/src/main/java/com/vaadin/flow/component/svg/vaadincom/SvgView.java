@@ -76,14 +76,16 @@ public class SvgView extends DemoView {
         // begin-source-example
         // source-example-heading: Complex Demo
         VerticalLayout demoContainer = new VerticalLayout();
+        HorizontalLayout zoomControlButtons = new HorizontalLayout();
         HorizontalLayout controlButtons = new HorizontalLayout();
+        demoContainer.add(zoomControlButtons);
         demoContainer.add(controlButtons);
         Span dragDetail = new Span();
         demoContainer.add(dragDetail);
 
         Svg svg = new Svg();
         svg.viewbox(0, 0, 380, 380);
-        svg.setWidth("100%");
+        svg.setWidth("500px");
         svg.setHeight("500px");
 
         double size = 100;
@@ -171,11 +173,11 @@ public class SvgView extends DemoView {
         demoContainer.add(svg);
 
         //Add control buttons
-        controlButtons.add(new Button("Toggle Zoom", e -> {
+        zoomControlButtons.add(new Button("Toggle Zoom", e -> {
             svg.setZoomEnabled(!svg.isZoomEnabled());
         }));
 
-        controlButtons.add(new Button("Toggle draggable", e -> {
+        zoomControlButtons.add(new Button("Toggle draggable", e -> {
             svg.getSvgElements().forEach(el ->
                 el.setDraggable(!el.isDraggable()));
 
@@ -195,6 +197,10 @@ public class SvgView extends DemoView {
 
                 svg.update(el);
             });
+        }));
+
+        zoomControlButtons.add(new Button("Pan To Image", e -> {
+            svg.panTo(image);
         }));
 
         controlButtons.add(new Button("Stroke black", e -> {
@@ -241,12 +247,12 @@ public class SvgView extends DemoView {
 
             dragDetail.setText("DragMove disabled for public demo" +
                 " due to potentially high request count.");
-//            svg.addDragMoveListener(event -> {
-//                dragDetail.setText("Drag Move for: " +
-//                    event.getElement().getId() +
-//                    " X: " + event.getElementX() +
-//                    " Y: " + event.getElementY());
-//            });
+                // svg.addDragMoveListener(event -> {
+                //     dragDetail.setText("Drag Move for: " +
+                //         event.getElement().getId() +
+                //         " X: " + event.getElementX() +
+                //         " Y: " + event.getElementY());
+                // });
 
             e.getSource().setEnabled(false);
         }));
