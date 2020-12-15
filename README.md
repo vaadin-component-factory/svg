@@ -4,11 +4,13 @@ Vaadin Svg for Flow is a UI component add-on for Vaadin that allows drawing SVG 
 
 ## License & Author
 
-This Add-on is distributed under [Commercial Vaadin Add-on License version 3](http://vaadin.com/license/cval-3) (CVALv3). For license terms, see LICENSE.txt.
+This Add-on is distributed under Apache 2.0
 
-Vaadin Svg is written by Vaadin Ltd.
+Component Factory Network is written by Vaadin Ltd.
 
-To purchase a license, visit http://vaadin.com/pricing
+### Sponsored development
+Major pieces of development of this add-on has been sponsored by multiple customers of Vaadin. Read more  about Expert on Demand at: [Support](https://vaadin.com/support) and  [Pricing](https://vaadin.com/pricing)
+
 
 ### Installing
 Add Svg to your project

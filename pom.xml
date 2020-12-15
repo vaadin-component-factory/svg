@@ -4,7 +4,7 @@
 
 	<groupId>org.vaadin.componentfactory</groupId>
 	<artifactId>svg-root</artifactId>
-	<version>1.0.2</version>
+	<version>1.0.3</version>
 	<packaging>pom</packaging>
 	<name>Svg Root</name>
 	<description>Integration of vcf-svg for Vaadin platform 14+</description>
@@ -54,11 +54,4 @@
 		</pluginRepository>
 	</pluginRepositories>
 
-
-	<licenses>
-		<license>
-			<name>CVALv3</name>
-			<url>https://vaadin.com/license/cval-3</url>
-		</license>
-	</licenses>
 </project>
