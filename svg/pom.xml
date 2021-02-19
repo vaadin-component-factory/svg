@@ -4,7 +4,7 @@
 
     <groupId>com.vaadin.componentfactory</groupId>
     <artifactId>svg</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 
     <name>Svg Component</name>
 
