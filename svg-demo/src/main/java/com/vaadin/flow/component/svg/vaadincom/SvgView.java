@@ -262,6 +262,7 @@ public class SvgView extends DemoView {
             e.getSource().setEnabled(false);
         }));
 
+        svg.addClickListener( event -> Notification.show( "Clicked on " + event.getSource() ) );
 
         // end-source-example
         addCard("Complex Demo", demoContainer);
