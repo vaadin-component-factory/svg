@@ -19,6 +19,7 @@
  */
 package com.vaadin.flow.component.svg;
 
+import com.vaadin.flow.component.ClickNotifier;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.HasSize;
 import com.vaadin.flow.component.HasStyle;
@@ -51,7 +52,7 @@ import java.util.logging.Logger;
 @Tag("vcf-svg")
 @NpmPackage(value = "@vaadin-component-factory/vcf-svg", version = "1.0.7")
 @JsModule("@vaadin-component-factory/vcf-svg/src/vcf-svg.js")
-public class Svg extends Component implements HasSize, HasStyle {
+public class Svg extends Component implements HasSize, HasStyle, ClickNotifier<Svg> {
 
     private static final long serialVersionUID = 4669224429512601365L;
     private static final Logger log = Logger.getLogger(Svg.class.getName());
