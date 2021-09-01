@@ -4,7 +4,7 @@
 
 	<groupId>org.vaadin.componentfactory</groupId>
 	<artifactId>svg-root</artifactId>
-	<version>1.1.0</version>
+	<version>1.1.1</version>
 	<packaging>pom</packaging>
 	<name>Svg Root</name>
 	<description>Integration of vcf-svg for Vaadin platform 14+</description>
