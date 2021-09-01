@@ -67,7 +67,11 @@ public class SvgView extends DemoView {
         draw.add(rect);
         draw.add(circle);
         draw.addClickListener(e -> {
-           Notification.show(e.getElement().getId() + " clicked");
+            if (e.getElement() != null) {
+                Notification.show(e.getElement().getId() + " clicked");
+            } else {
+                Notification.show("Mo Element clicked");
+            }
         });
         // end-source-example
 
