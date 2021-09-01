@@ -4,7 +4,7 @@
 
     <groupId>com.vaadin.componentfactory</groupId>
     <artifactId>svg-demo</artifactId>
-    <version>1.0.4</version>
+    <version>1.1.0</version>
     <inceptionYear>2020</inceptionYear>
 
     <name>Svg Demo</name>
@@ -63,6 +63,10 @@
     <dependencies>
         <dependency>
             <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
             <artifactId>flow-component-demo-helpers</artifactId>
             <version>${flow-demo.version}</version>
         </dependency>
@@ -70,7 +74,7 @@
         <dependency>
             <groupId>com.vaadin.componentfactory</groupId>
             <artifactId>svg</artifactId>
-            <version>1.0.4</version>
+            <version>1.1.0</version>
         </dependency>
         <!-- Added to provide logging output as Flow uses -->
         <!-- the unbound SLF4J no-operation (NOP) logger implementation -->

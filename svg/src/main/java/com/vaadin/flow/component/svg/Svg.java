@@ -27,6 +27,7 @@ import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.svg.elements.SvgElement;
+import com.vaadin.flow.component.svg.listeners.SvgClickListener;
 import com.vaadin.flow.component.svg.listeners.SvgDragEndListener;
 import com.vaadin.flow.component.svg.listeners.SvgDragMoveListener;
 import com.vaadin.flow.component.svg.listeners.SvgDragStartListener;
@@ -238,6 +239,24 @@ public class Svg extends Component implements HasSize, HasStyle {
         //In general we don't want the client-side to send events to the server unless we're actually listening to them.
         ensureDomDragMoveEventListenerRegistered();
         return addListener(SvgDragMoveListener.SvgDragMoveEvent.class, listener);
+    }
+
+
+
+    /**
+     * Adds a drag move event listener to this {@link Svg} component that will be triggered when a draggable component
+     * has moved from it's previous position on the client-side.
+     * <p>
+     * Warn, this is potentially a very heavy listener as every single move is sent to the server, use with caution.
+     * <p>
+     * Consider using {@link #addDragStartListener(SvgDragStartListener)} and {@link #addDragEndListener(SvgDragEndListener)}
+     * instead as the client-server latency makes it unfeasible for the server to react to single px moves anyway.
+     *
+     * @param listener the listener to add
+     * @return the registration for managing the listener
+     */
+    public Registration addClickListener(SvgClickListener listener) {
+        return addListener(SvgClickListener.SvgClickEvent.class, listener);
     }
 
     /**
