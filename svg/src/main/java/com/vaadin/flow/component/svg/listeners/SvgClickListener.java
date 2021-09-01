@@ -27,6 +27,7 @@ import com.vaadin.flow.component.svg.Svg;
 import com.vaadin.flow.component.svg.elements.Circle;
 import com.vaadin.flow.component.svg.elements.SvgElement;
 import elemental.json.JsonObject;
+import java.util.Optional;
 
 /**
  * Listener interface for listening to drag start events.
@@ -40,7 +41,7 @@ public interface SvgClickListener extends ComponentEventListener<SvgClickListene
     @DomEvent("click")
     class SvgClickEvent extends ComponentEvent<Svg> {
 
-        private SvgElement element;
+        private Optional<SvgElement> element;
 
         /**
          * Creates a new event using the given source and indicator whether the
@@ -51,11 +52,7 @@ public interface SvgClickListener extends ComponentEventListener<SvgClickListene
          */
         public SvgClickEvent(Svg source, boolean fromClient,  @EventData("event.srcElement.id") String id) {
             super(source, fromClient);
-            if (id != null && !id.isEmpty()) {
-                element = source.getSvgElements().stream().filter(element -> id.equals(element.getId())).findFirst().orElse(null);
-            } else {
-                element = null;
-            }
+            this.element = source.getSvgElement(id);
         }
 
         /**
@@ -65,7 +62,7 @@ public interface SvgClickListener extends ComponentEventListener<SvgClickListene
          * @return the {@link SvgElement} where this event happened
          */
         public SvgElement getElement() {
-            return element;
+            return element.orElse(null);
         }
     }
 }
