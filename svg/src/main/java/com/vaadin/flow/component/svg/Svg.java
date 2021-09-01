@@ -34,6 +34,9 @@ import com.vaadin.flow.component.svg.listeners.SvgDragStartListener;
 import com.vaadin.flow.dom.DomListenerRegistration;
 import com.vaadin.flow.shared.Registration;
 import elemental.json.JsonObject;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.stream.Collectors;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -57,7 +60,7 @@ public class Svg extends Component implements HasSize, HasStyle {
     private static final long serialVersionUID = 4669224429512601365L;
     private static final Logger log = Logger.getLogger(Svg.class.getName());
 
-    private Set<SvgElement> svgElements = new HashSet<>();
+    private Map<String,SvgElement> svgElements = new HashMap<>();
     private DomListenerRegistration dragstartDomRegistration;
     private DomListenerRegistration dragendDomRegistration;
     private DomListenerRegistration dragmoveDomRegistration;
@@ -77,7 +80,7 @@ public class Svg extends Component implements HasSize, HasStyle {
     public void add(SvgElement element) {
         Objects.requireNonNull(element);
         getElement().callJsFunction("add", element.cloneAttributesToJson());
-        svgElements.add(element);
+        svgElements.put(element.getId(), element);
         element.clearUpdates();
     }
 
@@ -111,7 +114,7 @@ public class Svg extends Component implements HasSize, HasStyle {
     public void remove(SvgElement element) {
 
         //Only call the client-side if the element actually existed here before.
-        if (svgElements.remove(element)) {
+        if (svgElements.remove(element.getId(), element)) {
             getElement().callJsFunction("remove", element.getId());
         }
     }
@@ -193,7 +196,7 @@ public class Svg extends Component implements HasSize, HasStyle {
      * @return an unmodifiable copy of the internal set of known elements
      */
     public Set<SvgElement> getSvgElements() {
-        return Collections.unmodifiableSet(svgElements);
+        return svgElements.values().stream().collect( Collectors.toUnmodifiableSet());
     }
 
     /**
@@ -309,7 +312,7 @@ public class Svg extends Component implements HasSize, HasStyle {
      * @param rawEventData the raw event data for extended use
      */
     protected void onDragStartEvent(String elementId, JsonObject rawEventData) {
-        Optional<SvgElement> element = findElementForId(elementId);
+        Optional<SvgElement> element = getSvgElement(elementId);
         if (!element.isPresent()) {
             log.fine("onDragStartEvent fired but no element found in internal list for id: " + elementId + " suppressing event as mapping cannot " +
                 "be done.");
@@ -325,7 +328,7 @@ public class Svg extends Component implements HasSize, HasStyle {
      * @param rawEventData the raw event data for extended use
      */
     protected void onDragEndEvent(String elementId, JsonObject rawEventData) {
-        Optional<SvgElement> element = findElementForId(elementId);
+        Optional<SvgElement> element = getSvgElement(elementId);
         if (!element.isPresent()) {
             log.fine("onDragEndEvent fired but no element found in internal list for id: " + elementId + " suppressing event as mapping cannot " +
                 "be done.");
@@ -342,7 +345,7 @@ public class Svg extends Component implements HasSize, HasStyle {
      * @param rawEventData the raw event data for extended use
      */
     protected void onDragMoveEvent(String elementId, JsonObject rawEventData) {
-        Optional<SvgElement> element = findElementForId(elementId);
+        Optional<SvgElement> element = getSvgElement(elementId);
         if (!element.isPresent()) {
             log.fine("onDragMoveEvent fired but no element found in internal list for id: " + elementId + " suppressing event as mapping cannot " +
                 "be done.");
@@ -357,8 +360,8 @@ public class Svg extends Component implements HasSize, HasStyle {
      * @param elementId the elementId to look for
      * @return an optional containing the svgElement or empty if none found.
      */
-    protected Optional<SvgElement> findElementForId(String elementId) {
-        return svgElements.stream().filter(element -> elementId.equals(element.getId())).findFirst();
+    public Optional<SvgElement> getSvgElement(String elementId) {
+        return Optional.ofNullable( svgElements.get( elementId ) );
     }
 
 }

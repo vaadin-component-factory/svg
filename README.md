@@ -56,5 +56,5 @@ To compile and run demos locally execute
 
 ```
 mvn compile
-mvn -pl vcf-svg-flow-demo -Pwar jetty:run
+mvn -pl svg-demo -Pwar jetty:run
 ```
