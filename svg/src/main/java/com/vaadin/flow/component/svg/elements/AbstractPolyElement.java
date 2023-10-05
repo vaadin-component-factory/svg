@@ -30,7 +30,7 @@ import java.util.List;
  */
 public abstract class AbstractPolyElement extends SvgElement {
 
-    private List<Polyline.PolyCoordinatePair> coordinatePairs = new ArrayList<>();
+    private final List<Polyline.PolyCoordinatePair> coordinatePairs = new ArrayList<>();
 
     /**
      * Creates a new PolyElement with the given id, initial points and the provided SvgType
@@ -118,8 +118,8 @@ public abstract class AbstractPolyElement extends SvgElement {
      */
     public static class PolyCoordinatePair {
 
-        private double polyX;
-        private double polyY;
+        private final double polyX;
+        private final double polyY;
 
         /**
          * Creates a new {@link PolyCoordinatePair} with the given x and y coordinates for this point.

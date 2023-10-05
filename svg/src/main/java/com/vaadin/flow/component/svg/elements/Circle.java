@@ -20,6 +20,8 @@ package com.vaadin.flow.component.svg.elements;
  * #L%
  */
 
+import com.vaadin.flow.component.Unit;
+
 /**
  * Represents a Circle svg element.
  */
@@ -64,6 +66,12 @@ public class Circle extends SvgElement {
      */
     public void center(double cx, double cy) {
         pushUpdate("center", val(cx), val(cy));
+    }
+
+    @Override
+    public void setPosition(double x, double y, Unit unit) {
+        setAttribute("cx", x + unit.getSymbol());
+        setAttribute("cy", y + unit.getSymbol());
     }
 
 }

@@ -27,10 +27,7 @@ import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.svg.elements.SvgElement;
-import com.vaadin.flow.component.svg.listeners.SvgClickListener;
-import com.vaadin.flow.component.svg.listeners.SvgDragEndListener;
-import com.vaadin.flow.component.svg.listeners.SvgDragMoveListener;
-import com.vaadin.flow.component.svg.listeners.SvgDragStartListener;
+import com.vaadin.flow.component.svg.listeners.*;
 import com.vaadin.flow.dom.DomListenerRegistration;
 import com.vaadin.flow.shared.Registration;
 import elemental.json.JsonObject;
@@ -241,22 +238,74 @@ public class Svg extends Component implements HasSize, HasStyle {
         return addListener(SvgDragMoveListener.SvgDragMoveEvent.class, listener);
     }
 
-
-
     /**
-     * Adds a drag move event listener to this {@link Svg} component that will be triggered when a draggable component
-     * has moved from it's previous position on the client-side.
-     * <p>
-     * Warn, this is potentially a very heavy listener as every single move is sent to the server, use with caution.
-     * <p>
-     * Consider using {@link #addDragStartListener(SvgDragStartListener)} and {@link #addDragEndListener(SvgDragEndListener)}
-     * instead as the client-server latency makes it unfeasible for the server to react to single px moves anyway.
+     * Adds a click listener
      *
      * @param listener the listener to add
      * @return the registration for managing the listener
      */
     public Registration addClickListener(SvgClickListener listener) {
         return addListener(SvgClickListener.SvgClickEvent.class, listener);
+    }
+
+    /**
+     * Adds a double click listener
+     *
+     * @param listener the listener to add
+     * @return the registration for managing the listener
+     */
+    public Registration addDoubleClickListener(SvgDoubleClickListener listener) {
+        return addListener(SvgDoubleClickListener.SvgDoubleClickEvent.class, listener);
+    }
+
+    /**
+     * Adds a mouse over listener
+     *
+     * @param listener the listener to add
+     * @return the registration for managing the listener
+     */
+    public Registration addMouseOverListener(SvgMouseOverListener listener) {
+        return addListener(SvgMouseOverListener.SvgMouseOverEvent.class, listener);
+    }
+
+    /**
+     * Adds a mouse out listener
+     *
+     * @param listener the listener to add
+     * @return the registration for managing the listener
+     */
+    public Registration addMouseOutListener(SvgMouseOutListener listener) {
+        return addListener(SvgMouseOutListener.SvgMouseOutEvent.class, listener);
+    }
+
+    /**
+     * Adds a mouse down listener
+     *
+     * @param listener the listener to add
+     * @return the registration for managing the listener
+     */
+    public Registration addMouseDownListener(SvgMouseDownListener listener) {
+        return addListener(SvgMouseDownListener.SvgMouseDownEvent.class, listener);
+    }
+
+    /**
+     * Adds a mouse up listener
+     *
+     * @param listener the listener to add
+     * @return the registration for managing the listener
+     */
+    public Registration addMouseUpListener(SvgMouseUpListener listener) {
+        return addListener(SvgMouseUpListener.SvgMouseUpEvent.class, listener);
+    }
+
+    /**
+     * Adds a mouse move listener
+     *
+     * @param listener the listener to add
+     * @return the registration for managing the listener
+     */
+    public Registration addMouseMoveListener(SvgMouseMoveListener listener) {
+        return addListener(SvgMouseMoveListener.SvgMouseMoveEvent.class, listener);
     }
 
     /**

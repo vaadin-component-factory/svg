@@ -7,9 +7,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,10 +19,12 @@
  */
 package com.vaadin.flow.component.svg.elements;
 
+import com.vaadin.flow.component.Unit;
 import elemental.json.*;
 import elemental.json.impl.JreJsonFactory;
 
 import java.util.Objects;
+import java.util.Optional;
 
 
 /**
@@ -194,6 +196,40 @@ public abstract class SvgElement {
     }
 
     /**
+     * Convenience method to set both x and y attributes at the same time
+     *
+     * @param x    x position
+     * @param y    y position
+     * @param unit numbers unit
+     */
+    public void setPosition(double x, double y, Unit unit) {
+        setAttribute("x", x + unit.getSymbol());
+        setAttribute("y", y + unit.getSymbol());
+    }
+
+    /**
+     * Add a class name for this element
+     *
+     * @param className ccs class name
+     */
+    public void addClassName(String className) {
+        String cssClass = Optional.ofNullable(getStringAttribute("class")).orElse("");
+        setAttribute("class", (cssClass + " " + className).trim());
+    }
+
+    /**
+     * Remove a class name for this element
+     *
+     * @param className ccs class name
+     */
+    public void removeClassName(String className) {
+        String cssClass = getStringAttribute("class");
+        if (cssClass != null) {
+            setAttribute("class", cssClass.replace(className, "").trim());
+        }
+    }
+
+    /**
      * Returns the pending updates for this element
      *
      * @return the array with pending updates
@@ -341,12 +377,12 @@ public abstract class SvgElement {
      * @param key   the key to set
      * @param value the Java String value to set
      */
-    protected void setAttribute(String key, String value) {
+    public void setAttribute(String key, String value) {
         setAttribute(key, val(value));
     }
 
     /**
-     * Convenience methtod for setting a Java Boolean.
+     * Convenience method for setting a Java Boolean.
      *
      * @param key   the key to set
      * @param value the boolean value to set
@@ -356,7 +392,7 @@ public abstract class SvgElement {
     }
 
     /**
-     * Convenience mehtod for setting a Java number attribute.
+     * Convenience method for setting a Java number attribute.
      * Note that the number will be converted to a double before conversion.
      *
      * @param key   the key to set
@@ -381,12 +417,12 @@ public abstract class SvgElement {
     }
 
     /**
-     * Retrns a value from the internal attributes map
+     * Returns a value from the internal attributes map
      *
      * @param key the key to fetch
      * @return the value or null if not present
      */
-    protected Object getAttribute(String key) {
+    public Object getAttribute(String key) {
         if (getAttributes().hasKey(key)) {
             return getAttributes().get(key);
         }
@@ -395,7 +431,7 @@ public abstract class SvgElement {
     }
 
     /**
-     * Convenience mehtod for getting a String attribute from the internal array.
+     * Convenience method for getting a String attribute from the internal array.
      *
      * @param key the key to fetch
      * @return the String value or null if not set.

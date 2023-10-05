@@ -20,24 +20,22 @@
 package com.vaadin.flow.component.svg.listeners;
 
 import com.vaadin.flow.component.ComponentEventListener;
-import com.vaadin.flow.component.DebounceSettings;
 import com.vaadin.flow.component.DomEvent;
 import com.vaadin.flow.component.EventData;
 import com.vaadin.flow.component.svg.Svg;
-import com.vaadin.flow.dom.DebouncePhase;
 
 /**
- * Listener interface for listening to click events.
+ * Listener interface for listening to mouseover events.
  */
-public interface SvgClickListener extends ComponentEventListener<SvgClickListener.SvgClickEvent> {
+public interface SvgMouseOverListener extends ComponentEventListener<SvgMouseOverListener.SvgMouseOverEvent> {
 
     /**
-     * Represents a click event on a client-side svg element.
+     * Represents a mouseover event on a client-side svg element.
      */
-    @DomEvent(value = "click", debounce = @DebounceSettings(timeout = 150, phases = DebouncePhase.TRAILING))
-    class SvgClickEvent extends AbstractSvgEvent {
+    @DomEvent("mouseover")
+    class SvgMouseOverEvent extends AbstractSvgEvent {
 
-        public SvgClickEvent(Svg source, boolean fromClient, @EventData("event.srcElement.id") String id) {
+        public SvgMouseOverEvent(Svg source, boolean fromClient, @EventData("event.srcElement.id") String id) {
             super(source, fromClient, id);
         }
     }

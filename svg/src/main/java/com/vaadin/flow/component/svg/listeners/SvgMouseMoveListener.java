@@ -20,25 +20,37 @@
 package com.vaadin.flow.component.svg.listeners;
 
 import com.vaadin.flow.component.ComponentEventListener;
-import com.vaadin.flow.component.DebounceSettings;
 import com.vaadin.flow.component.DomEvent;
 import com.vaadin.flow.component.EventData;
 import com.vaadin.flow.component.svg.Svg;
-import com.vaadin.flow.dom.DebouncePhase;
 
 /**
- * Listener interface for listening to click events.
+ * Listener interface for listening to mousemove events.
  */
-public interface SvgClickListener extends ComponentEventListener<SvgClickListener.SvgClickEvent> {
+public interface SvgMouseMoveListener extends ComponentEventListener<SvgMouseMoveListener.SvgMouseMoveEvent> {
 
     /**
-     * Represents a click event on a client-side svg element.
+     * Represents a mousemove event on a client-side svg element.
      */
-    @DomEvent(value = "click", debounce = @DebounceSettings(timeout = 150, phases = DebouncePhase.TRAILING))
-    class SvgClickEvent extends AbstractSvgEvent {
+    @DomEvent("mousemove")
+    class SvgMouseMoveEvent extends AbstractSvgEvent {
 
-        public SvgClickEvent(Svg source, boolean fromClient, @EventData("event.srcElement.id") String id) {
+        private final Double x;
+        private final Double y;
+
+        public SvgMouseMoveEvent(Svg source, boolean fromClient, @EventData("event.srcElement.id") String id,
+                                 @EventData("event.offsetX") Double x, @EventData("event.offsetY") Double y) {
             super(source, fromClient, id);
+            this.x = x;
+            this.y = y;
+        }
+
+        public Double getX() {
+            return x;
+        }
+
+        public Double getY() {
+            return y;
         }
     }
 }
