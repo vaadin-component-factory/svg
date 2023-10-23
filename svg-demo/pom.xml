@@ -4,7 +4,7 @@
 
     <groupId>com.vaadin.componentfactory</groupId>
     <artifactId>svg-demo</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <inceptionYear>2020</inceptionYear>
 
     <name>Svg Demo</name>
@@ -17,10 +17,10 @@
     <packaging>war</packaging>
 
     <properties>
-        <jetty.version>9.4.43.v20210629</jetty.version>
+        <jetty.version>11.0.17</jetty.version>
         <failOnMissingWebXml>false</failOnMissingWebXml>
         <java.version>17</java.version>
-        <vaadin.version>23.3.10</vaadin.version>
+        <vaadin.version>24.1.12</vaadin.version>
         <flow-demo.version>9.1.6</flow-demo.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -73,7 +73,9 @@
         <dependency>
             <groupId>com.vaadin.componentfactory</groupId>
             <artifactId>svg</artifactId>
-            <version>1.2.0</version>
+            <version>1.2.1</version>
+            <scope>system</scope>
+            <systemPath>C:/Users/Kriss Vaadin/workspace/svg/svg/target/svg-1.2.1.jar</systemPath>
         </dependency>
         <!-- Added to provide logging output as Flow uses -->
         <!-- the unbound SLF4J no-operation (NOP) logger implementation -->

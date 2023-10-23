@@ -4,7 +4,7 @@
 
     <groupId>com.vaadin.componentfactory</groupId>
     <artifactId>svg</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
 
     <name>Svg Component</name>
 
@@ -19,7 +19,7 @@
     <properties>
         <vaadin.version>23.3.12</vaadin.version>
         <java.version>17</java.version>
-        <vaadin.version>23.3.10</vaadin.version>
+        <vaadin.version>24.1.12</vaadin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
