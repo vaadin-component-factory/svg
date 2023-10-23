@@ -20,24 +20,22 @@
 package com.vaadin.flow.component.svg.listeners;
 
 import com.vaadin.flow.component.ComponentEventListener;
-import com.vaadin.flow.component.DebounceSettings;
 import com.vaadin.flow.component.DomEvent;
 import com.vaadin.flow.component.EventData;
 import com.vaadin.flow.component.svg.Svg;
-import com.vaadin.flow.dom.DebouncePhase;
 
 /**
- * Listener interface for listening to click events.
+ * Listener interface for listening to double click events.
  */
-public interface SvgClickListener extends ComponentEventListener<SvgClickListener.SvgClickEvent> {
+public interface SvgDoubleClickListener extends ComponentEventListener<SvgDoubleClickListener.SvgDoubleClickEvent> {
 
     /**
-     * Represents a click event on a client-side svg element.
+     * Represents a double click event on a client-side svg element.
      */
-    @DomEvent(value = "click", debounce = @DebounceSettings(timeout = 150, phases = DebouncePhase.TRAILING))
-    class SvgClickEvent extends AbstractSvgEvent {
+    @DomEvent("dblclick")
+    class SvgDoubleClickEvent extends AbstractSvgEvent {
 
-        public SvgClickEvent(Svg source, boolean fromClient, @EventData("event.srcElement.id") String id) {
+        public SvgDoubleClickEvent(Svg source, boolean fromClient, @EventData("event.srcElement.id") String id) {
             super(source, fromClient, id);
         }
     }

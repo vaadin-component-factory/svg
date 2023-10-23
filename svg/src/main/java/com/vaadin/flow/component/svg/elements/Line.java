@@ -34,6 +34,6 @@ public class Line extends AbstractPolyElement {
      * @param endPoint   the end point for this element
      */
     public Line(String id, PolyCoordinatePair startPoint, PolyCoordinatePair endPoint) {
-        super(id, Arrays.asList(new PolyCoordinatePair[]{startPoint, endPoint}), SvgType.LINE);
+        super(id, Arrays.asList(startPoint, endPoint), SvgType.LINE);
     }
 }

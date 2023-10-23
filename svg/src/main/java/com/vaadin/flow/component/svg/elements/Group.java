@@ -32,7 +32,7 @@ import java.util.Objects;
  */
 public class Group extends SvgElement {
 
-    private List<SvgElement> children = new ArrayList<>();
+    private final List<SvgElement> children = new ArrayList<>();
 
     /**
      * Creates a new group with the given id
