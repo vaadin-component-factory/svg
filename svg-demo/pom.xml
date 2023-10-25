@@ -19,8 +19,7 @@
     <properties>
         <jetty.version>9.4.43.v20210629</jetty.version>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <java.version>17</java.version>
-        <vaadin.version>23.3.10</vaadin.version>
+        <vaadin.version>23.3.25</vaadin.version>
         <flow-demo.version>9.1.6</flow-demo.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -111,7 +110,6 @@
                 <artifactId>vaadin-maven-plugin</artifactId>
                 <version>${vaadin.version}</version>
                 <configuration>
-                    <vaadin.productionMode>false</vaadin.productionMode>
                     <pnpmEnable>true</pnpmEnable>
                     <requireHomeNodeExec>true</requireHomeNodeExec>
                 </configuration>

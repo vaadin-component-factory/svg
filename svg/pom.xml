@@ -17,9 +17,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <vaadin.version>23.3.12</vaadin.version>
-        <java.version>17</java.version>
-        <vaadin.version>23.3.10</vaadin.version>
+        <vaadin.version>23.3.25</vaadin.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -67,7 +65,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
-                <version>2.10.4</version>
+                <version>3.6.0</version>
                 <executions>
                     <execution>
                         <id>attach-javadoc</id>
@@ -118,7 +116,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-assembly-plugin</artifactId>
-                        <version>3.5.0</version>
+                        <version>3.6.0</version>
                         <configuration>
                             <appendAssemblyId>false</appendAssemblyId>
                             <descriptors>
