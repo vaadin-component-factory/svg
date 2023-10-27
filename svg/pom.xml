@@ -17,7 +17,6 @@
     <packaging>jar</packaging>
 
     <properties>
-        <vaadin.version>23.3.12</vaadin.version>
         <java.version>17</java.version>
         <vaadin.version>24.1.12</vaadin.version>
         <maven.compiler.source>17</maven.compiler.source>
@@ -163,7 +162,6 @@
                         </executions>
                         <configuration>
                             <quiet>true</quiet>
-                            <additionalparam>-Xdoclint:none</additionalparam>
                         </configuration>
                     </plugin>
                 </plugins>
