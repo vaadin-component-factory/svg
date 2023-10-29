@@ -207,6 +207,7 @@ public class SvgView extends DemoView {
         }));
 
         zoomControlButtons.add(new Button("Pan To Image", e -> {
+            svg.setZoomEnabled(true);
             svg.panTo(image);
         }));
 

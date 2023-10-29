@@ -74,8 +74,6 @@
             <groupId>com.vaadin.componentfactory</groupId>
             <artifactId>svg</artifactId>
             <version>1.2.1</version>
-            <scope>system</scope>
-            <systemPath>C:/Users/Kriss Vaadin/workspace/svg/svg/target/svg-1.2.1.jar</systemPath>
         </dependency>
         <!-- Added to provide logging output as Flow uses -->
         <!-- the unbound SLF4J no-operation (NOP) logger implementation -->
