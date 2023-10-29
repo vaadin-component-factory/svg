@@ -141,7 +141,7 @@
         <profile>
             <id>production</id>
             <properties>
-                <vaadin.productionMode>false</vaadin.productionMode>
+                <vaadin.productionMode>true</vaadin.productionMode>
             </properties>
             <dependencies>
                 <dependency>
