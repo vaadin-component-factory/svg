@@ -34,7 +34,6 @@ import com.vaadin.flow.component.svg.elements.Rect;
 import com.vaadin.flow.component.svg.elements.Text;
 import com.vaadin.flow.demo.DemoView;
 import com.vaadin.flow.router.Route;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +49,6 @@ public class SvgView extends DemoView {
     }
 
     private void basicDemo() {
-
         // begin-source-example
         // source-example-heading: Basic Demo
         Svg draw = new Svg();
@@ -73,13 +71,15 @@ public class SvgView extends DemoView {
                 Notification.show("Mo Element clicked");
             }
         });
+        
+        draw.setTitle("I'm the title for the circle", circle.getId());
+
         // end-source-example
 
         addCard("Basic Demo", draw);
     }
 
     private void complexDemo() {
-
         // begin-source-example
         // source-example-heading: Complex Demo
         VerticalLayout demoContainer = new VerticalLayout();
@@ -178,6 +178,10 @@ public class SvgView extends DemoView {
         svg.add(image);
 
         demoContainer.add(svg);
+        
+        svg.setTitle("I'm the title for the ellipse1", "ellipse1");
+        svg.setTitle("I'm tooltip for the line", "line");
+        svg.setTitle("I'm title for the path", "path");  
 
         //Add control buttons
         zoomControlButtons.add(new Button("Toggle Zoom", e -> {
@@ -274,6 +278,5 @@ public class SvgView extends DemoView {
         // end-source-example
         addCard("Complex Demo", demoContainer);
     }
-
 
 }
