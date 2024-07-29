@@ -409,5 +409,15 @@ public class Svg extends Component implements HasSize, HasStyle {
     protected Optional<SvgElement> findElementForId(String elementId) {
         return svgElements.stream().filter(element -> elementId.equals(element.getId())).findFirst();
     }
-
+    
+    /**
+     * Sets title(tooltip) to the svgElement with the given id.
+     * 
+     * @param titleText title text to set
+     * @param parentElementId svgElement id to set title to
+     */
+    public void setTitle(String titleText, String parentElementId) {
+      getElement().executeJs("return;")
+          .then((x) -> getElement().callJsFunction("_setTitle", titleText, parentElementId));
+    }
 }
