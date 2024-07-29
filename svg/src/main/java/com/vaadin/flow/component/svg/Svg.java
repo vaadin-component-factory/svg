@@ -47,7 +47,7 @@ import java.util.logging.Logger;
  * elements as well as listen to events on said elements.
  */
 @Tag("vcf-svg")
-@NpmPackage(value = "@vaadin-component-factory/vcf-svg", version = "24.0.1")
+@NpmPackage(value = "@vaadin-component-factory/vcf-svg", version = "24.1.0")
 @JsModule("@vaadin-component-factory/vcf-svg/src/vcf-svg.js")
 public class Svg extends Component implements HasSize, HasStyle {
 
