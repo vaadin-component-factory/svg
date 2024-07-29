@@ -33,6 +33,17 @@ node_modules/
 package.json
 package-lock.json
 webpack.config.js
+.project
+.settings
+.classpath
+.npmrc
+.pnpmfile.cjs
+svg-demo/frontend/generated
+svg-demo/frontend/index.html
+svg-demo/src/main/dev-bundle
+tsconfig.json
+types.d.ts
+vite.config.ts
 
 # ignore db folder
 db/
