@@ -70,7 +70,7 @@ public class SvgView extends DemoView {
             if (e.getElement() != null) {
                 Notification.show(e.getElement().getId() + " clicked");
             } else {
-                Notification.show("Mo Element clicked");
+                Notification.show("No Element clicked");
             }
         });
         // end-source-example
