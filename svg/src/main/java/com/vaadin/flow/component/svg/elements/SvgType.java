@@ -19,13 +19,12 @@
  */
 package com.vaadin.flow.component.svg.elements;
 
-import elemental.json.JsonValue;
-import org.apache.commons.lang3.text.WordUtils;
+import tools.jackson.databind.JsonNode;
 
 /**
  * An enumeration containing the known supported types of svg element supported by the client-side implementation.
  *
- * @see SvgElement#setConstructor(SvgType, JsonValue...)
+ * @see SvgElement#setConstructor(SvgType, JsonNode...)
  */
 public enum SvgType {
     RECT, CIRCLE, ELLIPSE, LINE, POLYLINE, POLYGON, PATH, TEXT, IMAGE, GROUP, TEXT_PATH;
@@ -36,6 +35,12 @@ public enum SvgType {
      * @return the client-side compatible name for this entry.
      */
     public String getClientSideType() {
-        return WordUtils.uncapitalize(WordUtils.capitalizeFully(this.name(), '_').replace("_", ""));
+        String[] parts = this.name().toLowerCase().split("_");
+        StringBuilder sb = new StringBuilder(parts[0]);
+        for (int i = 1; i < parts.length; i++) {
+            sb.append(Character.toUpperCase(parts[i].charAt(0)));
+            sb.append(parts[i].substring(1));
+        }
+        return sb.toString();
     }
 }
