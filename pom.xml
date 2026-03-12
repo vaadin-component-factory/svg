@@ -4,11 +4,11 @@
 
 	<groupId>org.vaadin.componentfactory</groupId>
 	<artifactId>svg-root</artifactId>
-	<version>2.0.0</version>
+	<version>3.0.0</version>
 
 	<packaging>pom</packaging>
 	<name>Svg Root</name>
-	<description>Integration of vcf-svg for Vaadin platform 24</description>
+	<description>Integration of vcf-svg for Vaadin platform 25</description>
 
 	<inceptionYear>2020</inceptionYear>
 	<organization>

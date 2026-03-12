@@ -4,7 +4,7 @@
 
     <groupId>com.vaadin.componentfactory</groupId>
     <artifactId>svg-demo</artifactId>
-    <version>2.0.0</version>
+    <version>3.0.0</version>
     <inceptionYear>2020</inceptionYear>
 
     <name>Svg Demo</name>
@@ -17,13 +17,12 @@
     <packaging>war</packaging>
 
     <properties>
-        <jetty.version>11.0.17</jetty.version>
+        <jetty.version>12.1.2</jetty.version>
         <failOnMissingWebXml>false</failOnMissingWebXml>
-        <java.version>17</java.version>
-        <vaadin.version>24.1.12</vaadin.version>
-        <flow-demo.version>9.1.6</flow-demo.version>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <java.version>21</java.version>
+        <vaadin.version>25.0.5</vaadin.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
@@ -65,12 +64,6 @@
             <artifactId>vaadin-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-component-demo-helpers</artifactId>
-            <version>${flow-demo.version}</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.vaadin.componentfactory</groupId>
             <artifactId>svg</artifactId>
             <version>${project.version}</version>
@@ -80,6 +73,11 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-dev</artifactId>
+            <optional>true</optional>
         </dependency>
 
     </dependencies>
@@ -99,12 +97,9 @@
         <plugins>
             <!-- Jetty plugin for easy testing without a server -->
             <plugin>
-                <groupId>org.eclipse.jetty</groupId>
-                <artifactId>jetty-maven-plugin</artifactId>
+                <groupId>org.eclipse.jetty.ee10</groupId>
+                <artifactId>jetty-ee10-maven-plugin</artifactId>
                 <version>${jetty.version}</version>
-                <configuration>
-                    <!--                    <scanIntervalSeconds>1</scanIntervalSeconds>-->
-                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.vaadin</groupId>
@@ -134,6 +129,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-war-plugin</artifactId>
                 <version>3.4.0</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
             </plugin>
         </plugins>
     </build>

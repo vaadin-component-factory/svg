@@ -19,8 +19,8 @@
  */
 package com.vaadin.flow.component.svg.elements;
 
-import elemental.json.Json;
-import elemental.json.JsonArray;
+import com.vaadin.flow.internal.JacksonUtils;
+import tools.jackson.databind.node.ArrayNode;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -83,9 +83,9 @@ public class Group extends SvgElement {
     }
 
     protected void updateChildrenAttribute() {
-        JsonArray jsonArray = Json.createArray();
+        ArrayNode jsonArray = JacksonUtils.createArrayNode();
         for (int i = 0; i < children.size(); i++) {
-            jsonArray.set(i, val(children.get(i).getId()));
+            jsonArray.add(val(children.get(i).getId()));
         }
         setAttribute("__elements", jsonArray);
     }

@@ -22,7 +22,7 @@ package com.vaadin.flow.component.svg.listeners;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.svg.Svg;
 import com.vaadin.flow.component.svg.elements.SvgElement;
-import elemental.json.JsonObject;
+import tools.jackson.databind.JsonNode;
 
 /**
  * Listener interface for listening to drag move events.
@@ -46,7 +46,7 @@ public interface SvgDragMoveListener extends ComponentEventListener<SvgDragMoveL
          * @param element      the element where this event happened
          * @param rawEventData the raw event data for extended use
          */
-        public SvgDragMoveEvent(Svg source, boolean fromClient, SvgElement element, JsonObject rawEventData) {
+        public SvgDragMoveEvent(Svg source, boolean fromClient, SvgElement element, JsonNode rawEventData) {
             super(source, fromClient, rawEventData);
             this.element = element;
         }

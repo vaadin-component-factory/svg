@@ -19,7 +19,7 @@
  */
 package com.vaadin.flow.component.svg.elements;
 
-import elemental.json.JsonValue;
+import tools.jackson.databind.JsonNode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +90,7 @@ public abstract class AbstractPolyElement extends SvgElement {
      *
      * @return the Json value of all of the current coordinate pairs
      */
-    protected JsonValue convertCoordinatesToJsonString() {
+    protected JsonNode convertCoordinatesToJsonString() {
         StringBuilder sb = new StringBuilder();
         getCoordinatePairs().stream().forEach(entry -> sb.append(entry.getPairValueAsString()).append(" "));
         return val(sb.toString());

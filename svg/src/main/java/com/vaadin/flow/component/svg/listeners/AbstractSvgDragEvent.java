@@ -21,13 +21,13 @@ package com.vaadin.flow.component.svg.listeners;
 
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.svg.Svg;
-import elemental.json.JsonObject;
+import tools.jackson.databind.JsonNode;
 
 /**
  * Represents the common parts of SvgEvents like drag start, drag end and drag move.
  */
 public class AbstractSvgDragEvent extends ComponentEvent<Svg> {
-    private final JsonObject rawEventData;
+    private final JsonNode rawEventData;
 
     /**
      * Creates a new event using the given source and indicator whether the
@@ -37,7 +37,7 @@ public class AbstractSvgDragEvent extends ComponentEvent<Svg> {
      * @param fromClient   <code>true</code> if the event originated from the client
      * @param rawEventData the raw event data for extended use
      */
-    public AbstractSvgDragEvent(Svg source, boolean fromClient, JsonObject rawEventData) {
+    public AbstractSvgDragEvent(Svg source, boolean fromClient, JsonNode rawEventData) {
         super(source, fromClient);
         this.rawEventData = rawEventData;
     }
@@ -47,7 +47,7 @@ public class AbstractSvgDragEvent extends ComponentEvent<Svg> {
      *
      * @return the raw event data from the client
      */
-    public JsonObject getRawEventData() {
+    public JsonNode getRawEventData() {
         return rawEventData;
     }
 
@@ -57,8 +57,9 @@ public class AbstractSvgDragEvent extends ComponentEvent<Svg> {
      * @return the raw x value or null if not available
      */
     public Double getElementX() {
-        if (getRawEventData().hasKey("event.detail.handler.el.node.instance.x()")) {
-            return getRawEventData().getNumber("event.detail.handler.el.node.instance.x()");
+        JsonNode node = getRawEventData().get("event.detail.handler.el.node.instance.x()");
+        if (node != null && !node.isNull()) {
+            return node.asDouble();
         }
         return null;
     }
@@ -69,8 +70,9 @@ public class AbstractSvgDragEvent extends ComponentEvent<Svg> {
      * @return the raw y value or null if not available
      */
     public Double getElementY() {
-        if (getRawEventData().hasKey("event.detail.handler.el.node.instance.y()")) {
-            return getRawEventData().getNumber("event.detail.handler.el.node.instance.y()");
+        JsonNode node = getRawEventData().get("event.detail.handler.el.node.instance.y()");
+        if (node != null && !node.isNull()) {
+            return node.asDouble();
         }
         return null;
     }

@@ -30,7 +30,7 @@ import com.vaadin.flow.component.svg.elements.SvgElement;
 import com.vaadin.flow.component.svg.listeners.*;
 import com.vaadin.flow.dom.DomListenerRegistration;
 import com.vaadin.flow.shared.Registration;
-import elemental.json.JsonObject;
+import tools.jackson.databind.JsonNode;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -314,7 +314,7 @@ public class Svg extends Component implements HasSize, HasStyle {
     protected void ensureDomDragStartEventListenerRegistered() {
         if (dragstartDomRegistration == null) {
             dragstartDomRegistration = getElement().addEventListener("dragstart", e -> {
-                onDragStartEvent(e.getEventData().getString("event.detail.handler.el.node.id"), e.getEventData());
+                onDragStartEvent(e.getEventData().get("event.detail.handler.el.node.id").asText(), e.getEventData());
             }).addEventData("event.detail.handler.el.node.id")
                 .addEventData("event.detail.handler.el.node.instance.x()")
                 .addEventData("event.detail.handler.el.node.instance.y()");
@@ -327,7 +327,7 @@ public class Svg extends Component implements HasSize, HasStyle {
     protected void ensureDomDragEndEventListenerRegistered() {
         if (dragendDomRegistration == null) {
             dragendDomRegistration = getElement().addEventListener("dragend", e -> {
-                onDragEndEvent(e.getEventData().getString("event.detail.handler.el.node.id"), e.getEventData());
+                onDragEndEvent(e.getEventData().get("event.detail.handler.el.node.id").asText(), e.getEventData());
             }).addEventData("event.detail.handler.el.node.id")
                 .addEventData("event.detail.handler.el.node.instance.x()")
                 .addEventData("event.detail.handler.el.node.instance.y()");
@@ -341,7 +341,7 @@ public class Svg extends Component implements HasSize, HasStyle {
     protected void ensureDomDragMoveEventListenerRegistered() {
         if (dragmoveDomRegistration == null) {
             dragmoveDomRegistration = getElement().addEventListener("dragmove", e -> {
-                onDragMoveEvent(e.getEventData().getString("event.detail.handler.el.node.id"), e.getEventData());
+                onDragMoveEvent(e.getEventData().get("event.detail.handler.el.node.id").asText(), e.getEventData());
             }).addEventData("event.detail.handler.el.node.id")
                 .addEventData("event.detail.handler.el.node.instance.x()")
                 .addEventData("event.detail.handler.el.node.instance.y()");
@@ -357,7 +357,7 @@ public class Svg extends Component implements HasSize, HasStyle {
      * @param elementId    the element id to look for.
      * @param rawEventData the raw event data for extended use
      */
-    protected void onDragStartEvent(String elementId, JsonObject rawEventData) {
+    protected void onDragStartEvent(String elementId, JsonNode rawEventData) {
         Optional<SvgElement> element = findElementForId(elementId);
         if (!element.isPresent()) {
             log.fine("onDragStartEvent fired but no element found in internal list for id: " + elementId + " suppressing event as mapping cannot " +
@@ -373,7 +373,7 @@ public class Svg extends Component implements HasSize, HasStyle {
      * @param elementId    the element id to look for.
      * @param rawEventData the raw event data for extended use
      */
-    protected void onDragEndEvent(String elementId, JsonObject rawEventData) {
+    protected void onDragEndEvent(String elementId, JsonNode rawEventData) {
         Optional<SvgElement> element = findElementForId(elementId);
         if (!element.isPresent()) {
             log.fine("onDragEndEvent fired but no element found in internal list for id: " + elementId + " suppressing event as mapping cannot " +
@@ -390,7 +390,7 @@ public class Svg extends Component implements HasSize, HasStyle {
      * @param elementId    the element id to look for.
      * @param rawEventData the raw event data for extended use
      */
-    protected void onDragMoveEvent(String elementId, JsonObject rawEventData) {
+    protected void onDragMoveEvent(String elementId, JsonNode rawEventData) {
         Optional<SvgElement> element = findElementForId(elementId);
         if (!element.isPresent()) {
             log.fine("onDragMoveEvent fired but no element found in internal list for id: " + elementId + " suppressing event as mapping cannot " +

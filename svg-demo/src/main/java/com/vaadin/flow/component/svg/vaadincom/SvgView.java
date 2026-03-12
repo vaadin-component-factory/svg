@@ -16,7 +16,9 @@ package com.vaadin.flow.component.svg.vaadincom;
  * #L%
  */
 
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -32,20 +34,23 @@ import com.vaadin.flow.component.svg.elements.Polygon;
 import com.vaadin.flow.component.svg.elements.Polyline;
 import com.vaadin.flow.component.svg.elements.Rect;
 import com.vaadin.flow.component.svg.elements.Text;
-import com.vaadin.flow.demo.DemoView;
 import com.vaadin.flow.router.Route;
 import java.util.ArrayList;
 import java.util.List;
 
 @Route("")
-public class SvgView extends DemoView {
+public class SvgView extends VerticalLayout {
 
     private static final long serialVersionUID = -9216144022041025031L;
 
-    @Override
-    protected void initView() {
+    public SvgView() {
         basicDemo();
         complexDemo();
+    }
+
+    private void addCard(String title, Component... components) {
+        add(new H3(title));
+        add(components);
     }
 
     private void basicDemo() {

@@ -20,8 +20,11 @@
 package com.vaadin.flow.component.svg.elements;
 
 import com.vaadin.flow.component.Unit;
-import elemental.json.*;
-import elemental.json.impl.JreJsonFactory;
+import com.vaadin.flow.internal.JacksonUtils;
+import tools.jackson.databind.JsonNode;
+import tools.jackson.databind.node.ArrayNode;
+import tools.jackson.databind.node.JsonNodeFactory;
+import tools.jackson.databind.node.ObjectNode;
 
 import java.util.Objects;
 import java.util.Optional;
@@ -39,7 +42,7 @@ public abstract class SvgElement {
     /*
      * This array contains all the attributes that represent the state of this SvgElement
      */
-    private JsonObject attributes;
+    private ObjectNode attributes;
 
     /**
      * Creates a new SvgElement with the given id
@@ -48,7 +51,7 @@ public abstract class SvgElement {
      */
     public SvgElement(String id) {
         Objects.nonNull(id);
-        setAttributes(Json.createObject());
+        setAttributes(JacksonUtils.createObjectNode());
         clearUpdates();
         setId(id);
     }
@@ -96,10 +99,10 @@ public abstract class SvgElement {
      *
      * @return the cloned set of attributes, (including updates) for this {@link SvgElement}
      */
-    public JsonObject cloneAttributesToJson() {
+    public ObjectNode cloneAttributesToJson() {
         // The primary reason for this is because we need to clear the complex __updates array after Svg.add() or Svg.update()
         // and we need the current state to be cloned before the __updates array is cleared.
-        return new JreJsonFactory().parse(getAttributes().toJson());
+        return getAttributes().deepCopy();
     }
 
 
@@ -138,8 +141,8 @@ public abstract class SvgElement {
      * @return true if the element should be draggable, false otherwise
      */
     public boolean isDraggable() {
-        if (getAttributes().hasKey("draggable")) {
-            return getAttributes().getBoolean("draggable");
+        if (getAttributes().has("draggable")) {
+            return getAttributes().get("draggable").asBoolean();
         }
         return false;
     }
@@ -234,8 +237,8 @@ public abstract class SvgElement {
      *
      * @return the array with pending updates
      */
-    protected JsonArray getUpdates() {
-        return getAttributes().getArray("__updates");
+    protected ArrayNode getUpdates() {
+        return (ArrayNode) getAttributes().get("__updates");
     }
 
     /**
@@ -243,8 +246,8 @@ public abstract class SvgElement {
      * after each push to the client by the Svg class.
      */
     public void clearUpdates() {
-        JsonArray updates = Json.createArray();
-        getAttributes().put("__updates", updates);
+        ArrayNode updates = JacksonUtils.createArrayNode();
+        getAttributes().set("__updates", updates);
     }
 
     /**
@@ -253,7 +256,7 @@ public abstract class SvgElement {
      * @return the actual attributes map for this {@link SvgElement}
      * @see #cloneAttributesToJson() for a safer (cloned) set of the attributes map
      */
-    protected JsonObject getAttributes() {
+    protected ObjectNode getAttributes() {
         return attributes;
     }
 
@@ -269,7 +272,7 @@ public abstract class SvgElement {
      * @see #cloneAttributesToJson() for a safer (cloned) set of the attributes map
      */
     @Deprecated
-    public JsonObject getUnsafeAttributesMap() {
+    public ObjectNode getUnsafeAttributesMap() {
         return getAttributes();
     }
 
@@ -278,7 +281,7 @@ public abstract class SvgElement {
      *
      * @param attributes the array to set
      */
-    protected void setAttributes(JsonObject attributes) {
+    protected void setAttributes(ObjectNode attributes) {
         this.attributes = attributes;
     }
 
@@ -291,10 +294,10 @@ public abstract class SvgElement {
      *             {@link SvgType} enumeration.
      * @param args the initial constructor arguments to pass
      */
-    protected void setConstructor(SvgType type, JsonValue... args) {
+    protected void setConstructor(SvgType type, JsonNode... args) {
         assert type != null;
         getAttributes().put("__constructor", type.getClientSideType());
-        getAttributes().put("__constructorArgs", createArgArray(args));
+        getAttributes().set("__constructorArgs", createArgArray(args));
     }
 
     /**
@@ -303,11 +306,11 @@ public abstract class SvgElement {
      * @param args the values to put into the array, never null
      * @return the array with the given values
      */
-    protected static JsonArray createArgArray(JsonValue... args) {
+    protected static ArrayNode createArgArray(JsonNode... args) {
         Objects.requireNonNull(args);
-        JsonArray argsArray = Json.createArray();
-        for (JsonValue arg : args) {
-            argsArray.set(argsArray.length(), arg);
+        ArrayNode argsArray = JacksonUtils.createArrayNode();
+        for (JsonNode arg : args) {
+            argsArray.add(arg);
         }
         return argsArray;
     }
@@ -320,12 +323,12 @@ public abstract class SvgElement {
      * @param args the arguments to pass to the client-side method
      * @see #move(double, double)  as an example
      */
-    protected void pushUpdate(String name, JsonValue... args) {
-        JsonArray argArray = createArgArray(args);
-        JsonObject update = Json.createObject();
+    protected void pushUpdate(String name, JsonNode... args) {
+        ArrayNode argArray = createArgArray(args);
+        ObjectNode update = JacksonUtils.createObjectNode();
         update.put("function", name);
-        update.put("args", argArray);
-        getUpdates().set(getUpdates().length(), update);
+        update.set("args", argArray);
+        getUpdates().add(update);
         setAttribute("__updates", getUpdates());
     }
 
@@ -335,28 +338,28 @@ public abstract class SvgElement {
      * @param value the value to convert
      * @return the converted JsonNumber
      */
-    protected static JsonNumber val(double value) {
-        return Json.create(value);
+    protected static JsonNode val(double value) {
+        return JsonNodeFactory.instance.numberNode(value);
     }
 
     /**
-     * Convenience method for converting a Java String to a JsonString
+     * Convenience method for converting a Java String to a JsonNode
      *
      * @param value the string to convert
-     * @return the converted JsonString
+     * @return the converted JsonNode
      */
-    protected static JsonString val(String value) {
-        return Json.create(value);
+    protected static JsonNode val(String value) {
+        return JsonNodeFactory.instance.textNode(value);
     }
 
     /**
-     * Convenience method for converting a Java Boolean to a JsonBoolean.
+     * Convenience method for converting a Java Boolean to a JsonNode.
      *
      * @param value the boolean to convert
-     * @return the converted JsonBoolean
+     * @return the converted JsonNode
      */
-    protected static JsonBoolean val(Boolean value) {
-        return Json.create(value);
+    protected static JsonNode val(Boolean value) {
+        return JsonNodeFactory.instance.booleanNode(value);
     }
 
     /**
@@ -402,7 +405,7 @@ public abstract class SvgElement {
         if (value != null) {
             setAttribute(key, val(value.doubleValue()));
         } else {
-            setAttribute(key, (JsonValue) null);
+            setAttribute(key, (JsonNode) null);
         }
     }
 
@@ -412,8 +415,8 @@ public abstract class SvgElement {
      * @param key   the key to set
      * @param value the value to set
      */
-    protected void setAttribute(String key, JsonValue value) {
-        getAttributes().put(key, value);
+    protected void setAttribute(String key, JsonNode value) {
+        getAttributes().set(key, value);
     }
 
     /**
@@ -423,7 +426,7 @@ public abstract class SvgElement {
      * @return the value or null if not present
      */
     public Object getAttribute(String key) {
-        if (getAttributes().hasKey(key)) {
+        if (getAttributes().has(key)) {
             return getAttributes().get(key);
         }
 
@@ -437,8 +440,8 @@ public abstract class SvgElement {
      * @return the String value or null if not set.
      */
     protected String getStringAttribute(String key) {
-        if (getAttributes().hasKey(key)) {
-            return getAttributes().getString(key);
+        if (getAttributes().has(key)) {
+            return getAttributes().get(key).asText();
         }
         return null;
     }
@@ -450,8 +453,8 @@ public abstract class SvgElement {
      * @return the value or null if none set.
      */
     protected Boolean getBooleanAttribute(String key) {
-        if (getAttributes().hasKey(key)) {
-            return getAttributes().getBoolean(key);
+        if (getAttributes().has(key)) {
+            return getAttributes().get(key).asBoolean();
         }
 
         return null;
@@ -464,8 +467,8 @@ public abstract class SvgElement {
      * @return the value or null if none set
      */
     protected Number getNumberAttribute(String key) {
-        if (getAttributes().hasKey(key)) {
-            return getAttributes().getNumber(key);
+        if (getAttributes().has(key)) {
+            return getAttributes().get(key).asDouble();
         }
         return null;
     }
